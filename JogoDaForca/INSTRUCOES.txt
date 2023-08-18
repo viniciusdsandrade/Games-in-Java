@@ -1,0 +1,27 @@
+O presente trabalho consiste em implementar um jogo de FORCA.
+
+O arquivo Forca.java contem a main e sua implementação já está
+completa.
+
+O arquivo Teclado.java contem a classe Teclado com seus vários
+métodos para obter dados digitados no teclado. Sua implementação
+já está completa.
+
+TODOS os demais arquivos têm alguns métodos para serem
+implementados por vocês. Em cada método há um comentário para
+indicar o que aquele método deveria fazer, orientando sua
+implementação.
+
+Faça um programa de teste (classe com main) para testar
+COMPLETAMENTE cada uma das classes que contém métodos feitos
+por você. Isto é importante para que possamos ter certeza
+e que todas funcionam COMPLETAMENTE, uma vez que nem todos
+os métodos de todas elas sao usados na classe Forca.
+
+O presente trabalho pode ser feito em duplas (eventualmente
+haverá UM TRIO) e deve ser entregue até o dia 15/set; para ser
+considerado entregue, TODOS os alunos de cada equipe deverão
+me mostrar seus programas funcionando e deverão ser capazes de
+responder qualquer questionamento que eu faça na hora da
+entrega sobre o programa.
+
