@@ -4,12 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d97096da-35ba-4561-bcd7-999f9645d3f0" name="Changes" comment="build: 199 - lógica do checkmate">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/boardgame/Piece.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/boardgame/Piece.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/chess/ChessMatch.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chess/ChessMatch.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/chess/ChessPiece.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chess/ChessPiece.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/chess/pieces/Pawn.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chess/pieces/Pawn.java" afterDir="false" />
+    <list default="true" id="d97096da-35ba-4561-bcd7-999f9645d3f0" name="Changes" comment="build: 200 - Movimentação 'Peão'">
+      <change beforePath="$PROJECT_DIR$/src/chess/pieces/Bishop.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chess/pieces/Bishop.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/chess/pieces/King.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chess/pieces/King.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -108,7 +105,7 @@
       <updated>1692149299144</updated>
       <workItem from="1692149300523" duration="12000" />
       <workItem from="1703777865962" duration="19065000" />
-      <workItem from="1703859243796" duration="10963000" />
+      <workItem from="1703859243796" duration="11275000" />
     </task>
     <task id="LOCAL-00001" summary="build: 179 - 195">
       <option name="closed" value="true" />
@@ -142,7 +139,15 @@
       <option name="project" value="LOCAL" />
       <updated>1703869415589</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="build: 200 - Movimentação 'Peão'">
+      <option name="closed" value="true" />
+      <created>1703870802643</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1703870802643</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -165,6 +170,7 @@
     <MESSAGE value="build: 196 - manipulando peças capturadas" />
     <MESSAGE value="build: 197 - 198 - lógica do check" />
     <MESSAGE value="build: 199 - lógica do checkmate" />
-    <option name="LAST_COMMIT_MESSAGE" value="build: 199 - lógica do checkmate" />
+    <MESSAGE value="build: 200 - Movimentação 'Peão'" />
+    <option name="LAST_COMMIT_MESSAGE" value="build: 200 - Movimentação 'Peão'" />
   </component>
 </project>
