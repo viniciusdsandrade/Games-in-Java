@@ -1,6 +1,7 @@
 package chess.pieces;
 
 import boardgame.Board;
+import boardgame.Position;
 import chess.ChessPiece;
 import chess.Color;
 
@@ -16,6 +17,11 @@ public class Queen extends ChessPiece {
 
     @Override
     public boolean[][] possibleMoves() {
-        return new boolean[0][];
+        // TODO 
+        boolean[][] mat = new boolean[getBoard().getRows()][getBoard().getColumns()];
+
+        Position p = new Position(0, 0);
+
+        return mat;
     }
 }

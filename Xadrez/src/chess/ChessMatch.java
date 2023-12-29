@@ -14,6 +14,7 @@ public class ChessMatch {
     private int turn;
     private final Board board;
     private Color currentPlayer;
+    private boolean check;
 
     private List<Piece> piecesOnTheBoard = new ArrayList<>();
     private List<Piece> capturedPieces = new ArrayList<>();
@@ -31,6 +32,10 @@ public class ChessMatch {
 
     public Color getCurrentPlayer() {
         return currentPlayer;
+    }
+
+    public boolean getCheck() {
+        return check;
     }
 
     /**
@@ -74,20 +79,64 @@ public class ChessMatch {
      * Este método converte as posições de origem e destino do formato ChessPosition para Position,
      * valida a posição de origem, valida a posição de destino e realiza o movimento no tabuleiro.
      * Retorna a peça capturada, se houver, após o movimento, e avança para o próximo turno.
+     * Em caso de xeque no próprio Rei após o movimento, desfaz o movimento e lança uma exceção.
      * <p>
      *
      * @param sourcePosition A posição de origem no formato ChessPosition.
      * @param targetPosition A posição de destino no formato ChessPosition.
      * @return A peça capturada, se houver, após o movimento.
+     * @throws BoardException Se o movimento deixar o próprio Rei em xeque.
      */
     public ChessPiece performChessMove(ChessPosition sourcePosition, ChessPosition targetPosition) {
+        // Converte as posições de origem e destino para o formato Position
         Position source = sourcePosition.toPosition();
         Position target = targetPosition.toPosition();
+
+        // Valida a posição de origem e de destino
         validateSourcePosition(source);
         validateTargetPosition(source, target);
+
+        // Valida a posição de destino e realiza o movimento no tabuleiro
         Piece capturedPiece = makeMove(source, target);
+
+        // Verifica se o movimento deixou o próprio Rei em xeque
+        if (testCheck(currentPlayer)) {
+
+            undoMove(source, target, capturedPiece); // Desfaz o movimento e lança uma exceção
+            throw new BoardException("Não é permitido colocar o próprio Rei em xeque");
+        }
+
+        // Atualiza a flag 'check' indicando se o oponente está em xeque
+        check = testCheck(opponent(currentPlayer));
+
+        // Avança para o próximo turno
         nextTurn();
+
+        // Retorna a peça capturada, se houver, após o movimento
         return (ChessPiece) capturedPiece;
+    }
+
+
+    /**
+     * Desfaz um movimento de xadrez, restaurando o estado anterior ao movimento.
+     * <p>
+     * Este método desfaz um movimento anterior da posição de destino para a posição de origem no tabuleiro de xadrez,
+     * restaurando quaisquer peças capturadas durante o movimento. Se uma peça foi capturada durante o movimento original,
+     * ela será recolocada no tabuleiro na posição de destino.
+     *
+     * @param source        A posição original de origem do movimento.
+     * @param target        A posição original de destino do movimento.
+     * @param capturedPiece A peça capturada durante o movimento original, se houver.
+     */
+    private void undoMove(Position source, Position target, Piece capturedPiece) {
+        ChessPiece movedPiece = (ChessPiece) board.removePiece(target);
+        board.placePiece(movedPiece, source);
+
+        if (capturedPiece != null) {
+            board.placePiece(capturedPiece, target);
+            capturedPieces.remove(capturedPiece);
+            piecesOnTheBoard.add(capturedPiece);
+        }
     }
 
     /**
@@ -150,7 +199,7 @@ public class ChessMatch {
 
         if (capturedPiece != null) {
             piecesOnTheBoard.remove(capturedPiece);
-            capturedPieces.add((ChessPiece) capturedPiece);
+            capturedPieces.add(capturedPiece);
         }
 
         return capturedPiece;
@@ -165,6 +214,74 @@ public class ChessMatch {
         turn++;
         currentPlayer = (currentPlayer == Color.WHITE) ? Color.BLACK : Color.WHITE;
     }
+
+    /**
+     * Obtém a cor oponente em relação à cor fornecida.
+     * <p>
+     * Este método retorna a cor oposta à cor fornecida. Se a cor fornecida for BRANCA, retorna PRETA;
+     * se a cor fornecida for PRETA, retorna BRANCA.
+     *
+     * @param color A cor para a qual deseja-se encontrar o oponente.
+     * @return A cor oponente em relação à cor fornecida.
+     */
+    private Color opponent(Color color) {
+        return (color == Color.WHITE) ? Color.BLACK : Color.WHITE;
+    }
+
+
+    /**
+     * Obtém a peça do Rei da cor especificada no tabuleiro.
+     * <p>
+     * Este método percorre todas as peças no tabuleiro e retorna a instância da peça do Rei
+     * associada à cor fornecida. Se não houver um Rei da cor especificada no tabuleiro, uma exceção
+     * do tipo IllegalStateException será lançada.
+     *
+     * @param color A cor do Rei desejado (BRANCA ou PRETA).
+     * @return A instância da peça do Rei associada à cor fornecida.
+     * @throws IllegalStateException Se não houver um Rei da cor especificada no tabuleiro.
+     */
+    private ChessPiece king(Color color) {
+        List<Piece> listaDePecas = piecesOnTheBoard.stream()
+                .filter(x -> ((ChessPiece) x).getColor() == color)
+                .toList();
+
+        for (Piece peca : listaDePecas) {
+            if (peca instanceof King) {
+                return (ChessPiece) peca;
+            }
+        }
+
+        throw new IllegalStateException("Não há um rei " + color + " no tabuleiro");
+    }
+
+    /**
+     * Verifica se o Rei da cor especificada está em xeque.
+     * <p>
+     * Este método avalia se o Rei da cor fornecida está em uma posição vulnerável,
+     * ou seja, se ele está sob ameaça de captura pelo oponente. O método verifica
+     * todas as peças oponentes no tabuleiro e avalia se alguma delas pode se mover
+     * para a posição atual do Rei. Se alguma peça do oponente puder alcançar a posição
+     * do Rei, o método retorna verdadeiro indicando que o Rei está em xeque; caso contrário,
+     * retorna falso indicando que o Rei está seguro.
+     *
+     * @param color A cor do Rei a ser verificado quanto à condição de xeque (BRANCA ou PRETA).
+     * @return True se o Rei estiver em xeque, False caso contrário.
+     */
+    private boolean testCheck(Color color) {
+        Position kingPosition = king(color).getChessPosition().toPosition();
+        List<Piece> opponentPieces = piecesOnTheBoard.stream()
+                .filter(x -> ((ChessPiece) x).getColor() == opponent(color))
+                .toList();
+
+        for (Piece p : opponentPieces) {
+            boolean[][] mat = p.possibleMoves();
+            if (mat[kingPosition.getRow()][kingPosition.getColumn()]) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 
     /**
      * Coloca uma nova peça no tabuleiro usando coordenadas no formato (coluna, linha).
@@ -182,28 +299,35 @@ public class ChessMatch {
     }
 
     private void initialSetup() {
-        // Peças pretas
-        placeNewPiece('a', 8, new Rook(board, Color.BLACK));
-        placeNewPiece('b', 8, new Knight(board, Color.BLACK));
-        placeNewPiece('c', 8, new Bishop(board, Color.BLACK));
-        placeNewPiece('d', 8, new Queen(board, Color.BLACK));
-        placeNewPiece('e', 8, new King(board, Color.BLACK));
-        placeNewPiece('f', 8, new Bishop(board, Color.BLACK));
-        placeNewPiece('g', 8, new Knight(board, Color.BLACK));
-        placeNewPiece('h', 8, new Rook(board, Color.BLACK));
-//        for (char col = 'a'; col <= 'h'; col++)
-//            placeNewPiece(col, 7, new Pawn(board, Color.BLACK));
-
-        // Peças brancas
-        placeNewPiece('a', 1, new Rook(board, Color.WHITE));
-        placeNewPiece('b', 1, new Knight(board, Color.WHITE));
-        placeNewPiece('c', 1, new Bishop(board, Color.WHITE));
-        placeNewPiece('d', 1, new Queen(board, Color.WHITE));
+        placeNewPiece('h', 7, new Rook(board, Color.WHITE));
+        placeNewPiece('d', 1, new Rook(board, Color.WHITE));
         placeNewPiece('e', 1, new King(board, Color.WHITE));
-        placeNewPiece('f', 1, new Bishop(board, Color.WHITE));
-        placeNewPiece('g', 1, new Knight(board, Color.WHITE));
-        placeNewPiece('h', 1, new Rook(board, Color.WHITE));
-//        for (char col = 'a'; col <= 'h'; col++)
-//            placeNewPiece(col, 2, new Pawn(board, Color.WHITE));
+
+        placeNewPiece('b', 8, new Rook(board, Color.BLACK));
+        placeNewPiece('a', 8, new King(board, Color.BLACK));
     }
 }
+
+// Peças pretas
+//        placeNewPiece('a', 8, new Rook(board, Color.BLACK));
+//        placeNewPiece('b', 8, new Knight(board, Color.BLACK));
+//        placeNewPiece('c', 8, new Bishop(board, Color.BLACK));
+//        placeNewPiece('d', 8, new Queen(board, Color.BLACK));
+//        placeNewPiece('e', 8, new King(board, Color.BLACK));
+//        placeNewPiece('f', 8, new Bishop(board, Color.BLACK));
+//        placeNewPiece('g', 8, new Knight(board, Color.BLACK));
+//        placeNewPiece('h', 8, new Rook(board, Color.BLACK));
+////        for (char col = 'a'; col <= 'h'; col++)
+////            placeNewPiece(col, 7, new Pawn(board, Color.BLACK));
+//
+//        // Peças brancas
+//        placeNewPiece('a', 1, new Rook(board, Color.WHITE));
+//        placeNewPiece('b', 1, new Knight(board, Color.WHITE));
+//        placeNewPiece('c', 1, new Bishop(board, Color.WHITE));
+//        placeNewPiece('d', 1, new Queen(board, Color.WHITE));
+//        placeNewPiece('e', 1, new King(board, Color.WHITE));
+//        placeNewPiece('f', 1, new Bishop(board, Color.WHITE));
+//        placeNewPiece('g', 1, new Knight(board, Color.WHITE));
+//        placeNewPiece('h', 1, new Rook(board, Color.WHITE));
+////        for (char col = 'a'; col <= 'h'; col++)
+////            placeNewPiece(col, 2, new Pawn(board, Color.WHITE));

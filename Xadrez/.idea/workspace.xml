@@ -4,12 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d97096da-35ba-4561-bcd7-999f9645d3f0" name="Changes" comment="build: 179 - 195">
+    <list default="true" id="d97096da-35ba-4561-bcd7-999f9645d3f0" name="Changes" comment="build: 196 - manipulando peças capturadas">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/application/Program.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/Program.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/application/UI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/UI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/boardgame/Piece.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/boardgame/Piece.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/chess/ChessMatch.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chess/ChessMatch.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/chess/ChessPiece.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chess/ChessPiece.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/chess/pieces/Bishop.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chess/pieces/Bishop.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/chess/pieces/Knight.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chess/pieces/Knight.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/chess/pieces/Queen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chess/pieces/Queen.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,6 +29,7 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+    <option name="RESET_MODE" value="HARD" />
   </component>
   <component name="GitToolBoxStore">
     <option name="projectConfigVersion" value="5" />
@@ -107,7 +112,7 @@
       <updated>1692149299144</updated>
       <workItem from="1692149300523" duration="12000" />
       <workItem from="1703777865962" duration="19065000" />
-      <workItem from="1703859243796" duration="761000" />
+      <workItem from="1703859243796" duration="7623000" />
     </task>
     <task id="LOCAL-00001" summary="build: 179 - 195">
       <option name="closed" value="true" />
@@ -117,15 +122,35 @@
       <option name="project" value="LOCAL" />
       <updated>1703795971763</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="build: 196 - manipulando peças capturadas">
+      <option name="closed" value="true" />
+      <created>1703860203902</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1703860203902</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="build: 179 - 195" />
-    <option name="LAST_COMMIT_MESSAGE" value="build: 179 - 195" />
+    <MESSAGE value="build: 196 - manipulando peças capturadas" />
+    <option name="LAST_COMMIT_MESSAGE" value="build: 196 - manipulando peças capturadas" />
   </component>
 </project>

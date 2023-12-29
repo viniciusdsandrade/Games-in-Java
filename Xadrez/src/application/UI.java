@@ -4,8 +4,6 @@ import chess.ChessMatch;
 import chess.ChessPiece;
 import chess.ChessPosition;
 import chess.Color;
-import org.jetbrains.annotations.Contract;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
 import java.util.InputMismatchException;
@@ -48,7 +46,7 @@ public class UI {
      * @return O objeto ChessPosition representando a posição lida.
      * @throws InputMismatchException Se a entrada não representa uma posição de xadrez válida (por exemplo, "a1" a "h8").
      */
-    public static @NotNull ChessPosition readChessPosition(Scanner sc) {
+    public static ChessPosition readChessPosition(Scanner sc) {
         try {
             String s = sc.nextLine();
             char coluna = s.charAt(0);
@@ -59,30 +57,68 @@ public class UI {
             throw new InputMismatchException("Erro ao ler a posição de xadrez. Valores válidos estão entre a1 e h8.");
         }
     }
-    
+
+    /**
+     * Imprime o estado atual da partida de xadrez no console, incluindo o tabuleiro,
+     * as peças capturadas, o turno e o jogador da vez. Além disso, se houver xeque,
+     * imprime a mensagem "CHECK!".
+     *
+     * @param chessMatch A instância da partida de xadrez.
+     * @param captured A lista de peças capturadas durante a partida.
+     */
     public static void printMatch(ChessMatch chessMatch, List<ChessPiece> captured) {
+        // Imprime o tabuleiro
         printBoard(chessMatch.getPieces());
         System.out.println();
+
+        // Imprime as peças capturadas
         printCapturedPieces(captured);
+
+        // Imprime informações adicionais: turno e jogador da vez
         System.out.println("Turn: " + chessMatch.getTurn());
         System.out.println("Waiting player: " + chessMatch.getCurrentPlayer());
+
+        // Se houver xeque, imprime a mensagem "CHECK!"
+        if (chessMatch.getCheck()) {
+            System.out.println("CHECK!");
+        }
     }
 
+    /**
+     * Imprime o tabuleiro de xadrez no console, com coordenadas e peças destacadas por cor.
+     *
+     * @param pieces A matriz de peças que representa o estado atual do tabuleiro.
+     */
     public static void printBoard(ChessPiece[][] pieces) {
         StringBuilder sb = new StringBuilder();
 
-        sb.append("  a b c d e f g h\n"); // Adiciona as letras na parte superior
+        // Adiciona as letras na parte superior do tabuleiro
+        sb.append("  a b c d e f g h\n");
+
         for (int i = 0; i < pieces.length; i++) {
+            // Adiciona o número da linha à esquerda
             sb.append((8 - i)).append(" ");
+
+            // Adiciona as peças na linha atual
             for (int j = 0; j < pieces[i].length; j++) {
                 printPiece(sb, pieces[i][j]);
             }
-            sb.append(8 - i).append("\n"); // Adiciona o número da linha no lado direito
+
+            // Adiciona o número da linha à direita
+            sb.append(8 - i).append("\n");
         }
+
+        // Adiciona as letras na parte inferior do tabuleiro
         sb.append("  a b c d e f g h");
         System.out.println(sb);
     }
 
+    /**
+     * Imprime uma peça de xadrez no console, destacando a cor da peça com ANSI codes.
+     *
+     * @param sb O StringBuilder que armazena a representação do tabuleiro.
+     * @param piece A peça de xadrez a ser impressa.
+     */
     private static void printPiece(StringBuilder sb, ChessPiece piece) {
         if (piece == null) {
             sb.append("- ");
@@ -92,46 +128,78 @@ public class UI {
         }
     }
 
+    /**
+     * Imprime o tabuleiro de xadrez no console, com destaque para os movimentos possíveis.
+     *
+     * @param pieces A matriz de peças que representa o estado atual do tabuleiro.
+     * @param possibleMoves A matriz booleana indicando os movimentos possíveis.
+     */
     public static void printBoard(ChessPiece[][] pieces, boolean[][] possibleMoves) {
-        System.out.println("  a b c d e f g h"); // Adiciona as letras na parte superior
+        System.out.println("  a b c d e f g h");
 
         for (int i = 0; i < pieces.length; i++) {
             System.out.print((8 - i) + " ");
+
             for (int j = 0; j < pieces[i].length; j++) {
                 printPiece(pieces[i][j], possibleMoves[i][j]);
             }
-            System.out.println(8 - i); // Adiciona o número da linha no lado direito
+
+            System.out.println(8 - i);
         }
 
         System.out.println("  a b c d e f g h");
     }
 
+    /**
+     * Imprime uma peça de xadrez no console, com destaque para movimentos possíveis.
+     *
+     * @param chessPiece A peça de xadrez a ser impressa.
+     * @param background Indica se o fundo da peça deve ser destacado.
+     */
     private static void printPiece(ChessPiece chessPiece, boolean background) {
-        if (background)
+        if (background) {
             System.out.print(ANSI_BLUE_BACKGROUND);
+        }
 
         if (chessPiece == null) {
             System.out.print("-" + ANSI_RESET);
         } else {
-            if (chessPiece.getColor() == Color.WHITE)
-                System.out.print(ANSI_WHITE + chessPiece + ANSI_RESET);
-            else
-                System.out.print(ANSI_YELLOW + chessPiece + ANSI_RESET);
+            String colorCode = (chessPiece.getColor() == Color.WHITE) ? ANSI_WHITE : ANSI_YELLOW;
+            System.out.print(colorCode + chessPiece + ANSI_RESET);
         }
+
         System.out.print(" ");
     }
-    
-   private static void printCapturedPieces(List<ChessPiece> captured){
-         List<ChessPiece> white = captured.stream().filter(x -> x.getColor() == Color.WHITE).toList();
-         List<ChessPiece> black = captured.stream().filter(x -> x.getColor() == Color.BLACK).toList();
-         System.out.println("Captured pieces:");
-         System.out.print("White: ");
-         System.out.print(ANSI_WHITE);
-         System.out.println(Arrays.toString(white.toArray()));
-         System.out.print(ANSI_RESET);
-         System.out.print("Black: ");
-         System.out.print(ANSI_YELLOW);
-         System.out.println(Arrays.toString(black.toArray()));
-         System.out.print(ANSI_RESET);
-   } 
+
+
+    /**
+     * Imprime as peças capturadas no console, destacando as peças brancas e pretas.
+     <p>
+     * Este método recebe uma lista de peças capturadas, filtra-as por cor (branca ou preta)
+     * e imprime as peças brancas e pretas em cores diferentes no console.
+     *
+     * @param captured Lista de peças capturadas.
+     */
+    private static void printCapturedPieces(List<ChessPiece> captured) {
+        // Filtra as peças capturadas por cor
+        List<ChessPiece> white = captured.stream().filter(x -> x.getColor() == Color.WHITE).toList();
+        List<ChessPiece> black = captured.stream().filter(x -> x.getColor() == Color.BLACK).toList();
+
+        // Imprime o cabeçalho
+        System.out.println("Captured pieces:");
+
+        // Imprime as peças brancas
+        if (!white.isEmpty()) {
+            System.out.print("White: " + ANSI_WHITE + Arrays.toString(white.toArray()) + ANSI_RESET);
+        } else {
+            System.out.println("White: (None)");
+        }
+
+        // Imprime as peças pretas
+        if (!black.isEmpty()) {
+            System.out.print("Black: " + ANSI_YELLOW + Arrays.toString(black.toArray()) + ANSI_RESET);
+        } else {
+            System.out.println("Black: (None)");
+        }
+    }
 }

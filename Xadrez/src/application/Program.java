@@ -3,6 +3,7 @@ package application;
 import chess.ChessMatch;
 import chess.ChessPiece;
 import chess.ChessPosition;
+import exception.ChessException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +24,7 @@ public class Program {
 
                 System.out.print("Source: ");
                 ChessPosition source = UI.readChessPosition(sc);
-                
+
                 boolean[][] possibleMoves = chessMatch.possibleMoves(source);
                 UI.clearScreen();
                 UI.printBoard(chessMatch.getPieces(), possibleMoves);
@@ -32,10 +33,13 @@ public class Program {
                 ChessPosition target = UI.readChessPosition(sc);
 
                 ChessPiece capturedPiece = chessMatch.performChessMove(source, target);
-                
+
                 if (capturedPiece != null) {
                     captured.add(capturedPiece);
                 }
+            } catch (ChessException e) {
+                System.out.println(e.getMessage());
+                sc.nextLine();
             } catch (Exception e) {
                 System.out.println(e.getMessage());
                 sc.nextLine();
