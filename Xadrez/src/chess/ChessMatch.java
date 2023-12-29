@@ -15,6 +15,7 @@ public class ChessMatch {
     private final Board board;
     private Color currentPlayer;
     private boolean check;
+    private boolean checkMate;
 
     private List<Piece> piecesOnTheBoard = new ArrayList<>();
     private List<Piece> capturedPieces = new ArrayList<>();
@@ -36,6 +37,10 @@ public class ChessMatch {
 
     public boolean getCheck() {
         return check;
+    }
+
+    public boolean getCheckMate() {
+        return checkMate;
     }
 
     /**
@@ -109,9 +114,12 @@ public class ChessMatch {
         // Atualiza a flag 'check' indicando se o oponente está em xeque
         check = testCheck(opponent(currentPlayer));
 
-        // Avança para o próximo turno
-        nextTurn();
-
+        if (testCheckMate(opponent(currentPlayer)))
+            checkMate = true;
+        else
+            // Avança para o próximo turno
+            nextTurn();
+        
         // Retorna a peça capturada, se houver, após o movimento
         return (ChessPiece) capturedPiece;
     }
@@ -280,6 +288,53 @@ public class ChessMatch {
             }
         }
         return false;
+    }
+
+    /**
+     * Verifica se o Rei da cor especificada está em xeque-mate.
+     * <p>
+     * Este método avalia se o Rei da cor fornecida está em xeque-mate, ou seja,
+     * se ele está sob ameaça de captura pelo oponente e não há movimentos possíveis
+     * para o Rei escapar do xeque. O método verifica todas as peças do Rei no tabuleiro
+     * e avalia se alguma delas pode se mover para uma posição que não esteja sob ameaça
+     * de captura pelo oponente. Se alguma peça do Rei puder se mover para uma posição
+     * segura, o método retorna falso indicando que o Rei não está em xeque-mate; caso contrário,
+     * retorna verdadeiro indicando que o Rei está em xeque-mate.
+     *
+     * @param color A cor do Rei a ser verificado quanto à condição de xeque-mate (BRANCA ou PRETA).
+     * @return True se o Rei estiver em xeque-mate, False caso contrário.
+     */
+
+    private boolean testCheckMate(Color color) {
+        // Se o Rei não estiver em xeque, não está em xeque-mate
+        if (!testCheck(color)) {
+            return false;
+        }
+
+        // Lista todas as peças da cor fornecida
+        List<Piece> listaDePecas = piecesOnTheBoard.stream()
+                .filter(x -> ((ChessPiece) x).getColor() == color)
+                .toList();
+
+        // Para cada peça da cor fornecida, verifica se há algum movimento possível para escapar do xeque
+        for (Piece peca : listaDePecas) {
+            boolean[][] mat = peca.possibleMoves();
+            for (int i = 0; i < board.getRows(); i++) {
+                for (int j = 0; j < board.getColumns(); j++) {
+                    if (mat[i][j]) {
+                        Position source = ((ChessPiece) peca).getChessPosition().toPosition();
+                        Position target = new Position(i, j);
+                        Piece capturedPiece = makeMove(source, target);
+                        boolean testCheck = testCheck(color);
+                        undoMove(source, target, capturedPiece);
+                        if (!testCheck) {
+                            return false;
+                        }
+                    }
+                }
+            }
+        }
+        return true;
     }
 
 

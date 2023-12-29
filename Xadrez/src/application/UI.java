@@ -67,20 +67,20 @@ public class UI {
      * @param captured A lista de peças capturadas durante a partida.
      */
     public static void printMatch(ChessMatch chessMatch, List<ChessPiece> captured) {
-        // Imprime o tabuleiro
         printBoard(chessMatch.getPieces());
         System.out.println();
-
-        // Imprime as peças capturadas
         printCapturedPieces(captured);
-
-        // Imprime informações adicionais: turno e jogador da vez
-        System.out.println("Turn: " + chessMatch.getTurn());
-        System.out.println("Waiting player: " + chessMatch.getCurrentPlayer());
-
-        // Se houver xeque, imprime a mensagem "CHECK!"
-        if (chessMatch.getCheck()) {
-            System.out.println("CHECK!");
+        System.out.println();
+        System.out.println("Turn : " + chessMatch.getTurn());
+        if (!chessMatch.getCheckMate()) {
+            System.out.println("Waiting player: " + chessMatch.getCurrentPlayer());
+            if (chessMatch.getCheck()) {
+                System.out.println("CHECK!");
+            }
+        }
+        else {
+            System.out.println("CHECKMATE!");
+            System.out.println("Winner: " + chessMatch.getCurrentPlayer());
         }
     }
 
@@ -181,6 +181,7 @@ public class UI {
      * @param captured Lista de peças capturadas.
      */
     private static void printCapturedPieces(List<ChessPiece> captured) {
+        
         // Filtra as peças capturadas por cor
         List<ChessPiece> white = captured.stream().filter(x -> x.getColor() == Color.WHITE).toList();
         List<ChessPiece> black = captured.stream().filter(x -> x.getColor() == Color.BLACK).toList();
@@ -189,17 +190,15 @@ public class UI {
         System.out.println("Captured pieces:");
 
         // Imprime as peças brancas
-        if (!white.isEmpty()) {
-            System.out.print("White: " + ANSI_WHITE + Arrays.toString(white.toArray()) + ANSI_RESET);
-        } else {
-            System.out.println("White: (None)");
-        }
+        System.out.print("White: ");
+        System.out.print(ANSI_WHITE);
+        System.out.println(Arrays.toString(white.toArray()));
+        System.out.print(ANSI_RESET);
 
         // Imprime as peças pretas
-        if (!black.isEmpty()) {
-            System.out.print("Black: " + ANSI_YELLOW + Arrays.toString(black.toArray()) + ANSI_RESET);
-        } else {
-            System.out.println("Black: (None)");
-        }
+        System.out.print("Black: ");
+        System.out.print(ANSI_YELLOW);
+        System.out.println(Arrays.toString(black.toArray()));
+        System.out.print(ANSI_RESET);
     }
 }
