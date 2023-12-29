@@ -119,33 +119,11 @@ public class ChessMatch {
         else
             // Avança para o próximo turno
             nextTurn();
-        
+
         // Retorna a peça capturada, se houver, após o movimento
         return (ChessPiece) capturedPiece;
     }
 
-
-    /**
-     * Desfaz um movimento de xadrez, restaurando o estado anterior ao movimento.
-     * <p>
-     * Este método desfaz um movimento anterior da posição de destino para a posição de origem no tabuleiro de xadrez,
-     * restaurando quaisquer peças capturadas durante o movimento. Se uma peça foi capturada durante o movimento original,
-     * ela será recolocada no tabuleiro na posição de destino.
-     *
-     * @param source        A posição original de origem do movimento.
-     * @param target        A posição original de destino do movimento.
-     * @param capturedPiece A peça capturada durante o movimento original, se houver.
-     */
-    private void undoMove(Position source, Position target, Piece capturedPiece) {
-        ChessPiece movedPiece = (ChessPiece) board.removePiece(target);
-        board.placePiece(movedPiece, source);
-
-        if (capturedPiece != null) {
-            board.placePiece(capturedPiece, target);
-            capturedPieces.remove(capturedPiece);
-            piecesOnTheBoard.add(capturedPiece);
-        }
-    }
 
     /**
      * Valida a posição de origem para realizar um movimento de xadrez.
@@ -201,16 +179,53 @@ public class ChessMatch {
      * @return A peça capturada, se houver, após o movimento.
      */
     private Piece makeMove(Position source, Position target) {
+        // Remove a peça da posição de origem e a coloca na posição de destino
         ChessPiece movedPiece = (ChessPiece) board.removePiece(source);
+
+        // Atualiza a contagem de movimentos da peça movida
+        movedPiece.increaseMoveCount();
+
+        // Captura a peça adversária, se houver, e a remove do tabuleiro
         Piece capturedPiece = board.removePiece(target);
         board.placePiece(movedPiece, target);
 
+        // Se houver uma peça adversária na posição de destino, adiciona a peça capturada à lista de peças capturadas
         if (capturedPiece != null) {
             piecesOnTheBoard.remove(capturedPiece);
             capturedPieces.add(capturedPiece);
         }
 
         return capturedPiece;
+    }
+
+    /**
+     * Desfaz um movimento de xadrez, restaurando o estado anterior ao movimento.
+     * <p>
+     * Este método desfaz um movimento anterior da posição de destino para a posição de origem no tabuleiro de xadrez,
+     * restaurando quaisquer peças capturadas durante o movimento. Se uma peça foi capturada durante o movimento original,
+     * ela será recolocada no tabuleiro na posição de destino.
+     *
+     * @param source        A posição original de origem do movimento.
+     * @param target        A posição original de destino do movimento.
+     * @param capturedPiece A peça capturada durante o movimento original, se houver.
+     */
+    private void undoMove(Position source, Position target, Piece capturedPiece) {
+
+        // Remove a peça da posição de destino e a coloca na posição de origem
+        ChessPiece movedPiece = (ChessPiece) board.removePiece(target);
+
+        // Atualiza a contagem de movimentos da peça movida
+        movedPiece.decreaseMoveCount();
+
+        // Recoloca a peça movida na posição de origem
+        board.placePiece(movedPiece, source);
+
+        // Se houver uma peça capturada durante o movimento original, recoloca a peça capturada no tabuleiro
+        if (capturedPiece != null) {
+            board.placePiece(capturedPiece, target);
+            capturedPieces.remove(capturedPiece);
+            piecesOnTheBoard.add(capturedPiece);
+        }
     }
 
     /**
@@ -354,35 +369,29 @@ public class ChessMatch {
     }
 
     private void initialSetup() {
-        placeNewPiece('h', 7, new Rook(board, Color.WHITE));
-        placeNewPiece('d', 1, new Rook(board, Color.WHITE));
-        placeNewPiece('e', 1, new King(board, Color.WHITE));
+        //Peças pretas
+        placeNewPiece('a', 8, new Rook(board, Color.BLACK));
+        placeNewPiece('b', 8, new Knight(board, Color.BLACK));
+        placeNewPiece('c', 8, new Bishop(board, Color.BLACK));
+        placeNewPiece('d', 8, new Queen(board, Color.BLACK));
+        placeNewPiece('e', 8, new King(board, Color.BLACK));
+        placeNewPiece('f', 8, new Bishop(board, Color.BLACK));
+        placeNewPiece('g', 8, new Knight(board, Color.BLACK));
+        placeNewPiece('h', 8, new Rook(board, Color.BLACK));
+        for (char col = 'a'; col <= 'h'; col++)
+            placeNewPiece(col, 7, new Pawn(board, Color.BLACK));
 
-        placeNewPiece('b', 8, new Rook(board, Color.BLACK));
-        placeNewPiece('a', 8, new King(board, Color.BLACK));
+        // Peças brancas
+        placeNewPiece('a', 1, new Rook(board, Color.WHITE));
+        placeNewPiece('b', 1, new Knight(board, Color.WHITE));
+        placeNewPiece('c', 1, new Bishop(board, Color.WHITE));
+        placeNewPiece('d', 1, new Queen(board, Color.WHITE));
+        placeNewPiece('e', 1, new King(board, Color.WHITE));
+        placeNewPiece('f', 1, new Bishop(board, Color.WHITE));
+        placeNewPiece('g', 1, new Knight(board, Color.WHITE));
+        placeNewPiece('h', 1, new Rook(board, Color.WHITE));
+        for (char col = 'a'; col <= 'h'; col++)
+            placeNewPiece(col, 2, new Pawn(board, Color.WHITE));
     }
 }
 
-// Peças pretas
-//        placeNewPiece('a', 8, new Rook(board, Color.BLACK));
-//        placeNewPiece('b', 8, new Knight(board, Color.BLACK));
-//        placeNewPiece('c', 8, new Bishop(board, Color.BLACK));
-//        placeNewPiece('d', 8, new Queen(board, Color.BLACK));
-//        placeNewPiece('e', 8, new King(board, Color.BLACK));
-//        placeNewPiece('f', 8, new Bishop(board, Color.BLACK));
-//        placeNewPiece('g', 8, new Knight(board, Color.BLACK));
-//        placeNewPiece('h', 8, new Rook(board, Color.BLACK));
-////        for (char col = 'a'; col <= 'h'; col++)
-////            placeNewPiece(col, 7, new Pawn(board, Color.BLACK));
-//
-//        // Peças brancas
-//        placeNewPiece('a', 1, new Rook(board, Color.WHITE));
-//        placeNewPiece('b', 1, new Knight(board, Color.WHITE));
-//        placeNewPiece('c', 1, new Bishop(board, Color.WHITE));
-//        placeNewPiece('d', 1, new Queen(board, Color.WHITE));
-//        placeNewPiece('e', 1, new King(board, Color.WHITE));
-//        placeNewPiece('f', 1, new Bishop(board, Color.WHITE));
-//        placeNewPiece('g', 1, new Knight(board, Color.WHITE));
-//        placeNewPiece('h', 1, new Rook(board, Color.WHITE));
-////        for (char col = 'a'; col <= 'h'; col++)
-////            placeNewPiece(col, 2, new Pawn(board, Color.WHITE));
