@@ -4,34 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d97096da-35ba-4561-bcd7-999f9645d3f0" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/10-projeto-sistema-xadrez.pdf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chess-system-design.asta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chess-system-design.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/application/Program.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/application/UI.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/boardgame/Board.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/boardgame/Piece.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/boardgame/Position.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/chess/ChessMatch.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/chess/ChessPiece.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/chess/ChessPosition.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/chess/Color.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/chess/pieces/Bishop.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/chess/pieces/King.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/chess/pieces/Knight.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/chess/pieces/Pawn.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/chess/pieces/Queen.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/chess/pieces/Rook.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/exception/BoardException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/exception/ChessException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="d97096da-35ba-4561-bcd7-999f9645d3f0" name="Changes" comment="build: 179 - 195">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Xadrez.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Xadrez.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/application/Program.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/Program.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/application/UI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/UI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/chess/ChessMatch.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chess/ChessMatch.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/chess/pieces/Bishop.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chess/pieces/Bishop.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -51,9 +29,9 @@
   <component name="GitToolBoxStore">
     <option name="projectConfigVersion" value="5" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 0
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 0
+}</component>
   <component name="ProjectId" id="2U2t2nHtplw2AWYfE8AhLcs9HB2" />
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
@@ -62,34 +40,34 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "Application.Main.executor": "Run",
-    "Application.Program.executor": "Run",
-    "Downloaded.Files.Path.Enabled": "false",
-    "Repository.Attach.Annotations": "false",
-    "Repository.Attach.JavaDocs": "false",
-    "Repository.Attach.Sources": "false",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "main",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/Pichau/Desktop/java-classical-games/java-classical-games/Xadrez",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0",
-    "settings.editor.selected.configurable": "preferences.lookFeel",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Program.executor&quot;: &quot;Run&quot;,
+    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.JavaDocs&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.Sources&quot;: &quot;false&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Pichau/Desktop/java-classical-games/java-classical-games/Xadrez&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
       <recent name="chess.pieces" />
@@ -128,8 +106,18 @@
       <option name="presentableId" value="Default" />
       <updated>1692149299144</updated>
       <workItem from="1692149300523" duration="12000" />
-      <workItem from="1703777865962" duration="17899000" />
+      <workItem from="1703777865962" duration="19065000" />
+      <workItem from="1703859243796" duration="761000" />
     </task>
+    <task id="LOCAL-00001" summary="build: 179 - 195">
+      <option name="closed" value="true" />
+      <created>1703795971763</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1703795971763</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -137,5 +125,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <MESSAGE value="build: 179 - 195" />
+    <option name="LAST_COMMIT_MESSAGE" value="build: 179 - 195" />
   </component>
 </project>
